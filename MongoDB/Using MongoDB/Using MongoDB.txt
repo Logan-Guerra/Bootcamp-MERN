@@ -1,0 +1,64 @@
+//1.
+use my_first_db
+
+//2.
+db.createCollection("students")
+
+//3&4.
+db.students.insert({name: "Hatem", home_state: "New York", lucky_number: 10, birthday:{month: 05, day: 27, year:1998}})
+db.students.insert({name: "AbdAlrahman", home_state: "California", lucky_number: 6, birthday:{month: 04, day: 04, year:1996}})
+db.students.insert({name: "Noor", home_state: "Chicago", lucky_number: 7, birthday:{month: 03, day: 15, year:2000}})
+db.students.insert({name: "Jad", home_state: "Texas", lucky_number: 13, birthday:{month: 11, day: 15, year:2002}})
+db.students.insert({name: "Hadeel", home_state: "Washington", lucky_number: 2, birthday:{month: 09, day: 01, year:1992}})
+
+//5.
+db.students.find().pretty()
+
+//6.
+db.students.find({$or:[{home_state:"California"},{home_state:"Washington"}]})
+
+//7.
+db.students.find({lucky_number:{$gt:3}}).pretty()
+
+//8.
+db.students.find({lucky_number:{$lte:10}}).pretty()
+
+//9.
+db.students.find({$and:[{lucky_number:{$gte:1}},{lucky_number:{$lte:9}}]}).pretty()
+
+//10.
+db.students.update({},{$set:{interests:["coding","brunch","MongoDB"]}})
+
+//11.
+db.students.update({"_id" : ObjectId("6101182289fb5c6040f52a3f")},{$push:{interests:"python"}})
+db.students.update({"_id" : ObjectId("6101182789fb5c6040f52a40")},{$push:{interests:"java"}})
+db.students.update({"_id" : ObjectId("61011a7d89fb5c6040f52a41")},{$push:{interests:"c++"}})
+db.students.update({"_id" : ObjectId("61011a8489fb5c6040f52a42")},{$push:{interests:"javascript"}})
+db.students.update({"_id" : ObjectId("61011a8a89fb5c6040f52a43")},{$push:{interests:"react"}})
+
+//12.
+db.students.update({"_id" : ObjectId("6101182289fb5c6040f52a3f")},{$push:{interests:"taxes"}})
+
+//13.
+db.students.update({"_id" : ObjectId("6101182289fb5c6040f52a3f")},{$pull:{interests:"taxes"}})
+
+//14.
+db.students.remove({home_state:"California"})
+
+//15.
+db.students.remove({name:"Noor"})
+
+//16.
+db.students.deleteOne({lucky_number: {$gte : 5}})
+
+//17.
+db.students.updateMany({}, {$set : {number_of_belts : 0}})
+
+//18.
+db.students.updateMany({home_state : "Washington"}, {$inc:{number_of_belts: 1}})
+
+//19.
+db.students.updateMany({}, {$unset:{lucky_number: ""}})
+
+//20.
+db.students.updateMany({}, {$currentDate: {updated_on: {$type: "date"}}})
